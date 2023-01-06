@@ -1,0 +1,25 @@
+<launch>
+
+    <arg name="project" default="lio_sam"/>
+    
+    <!-- Parameters -->
+    <rosparam file="$(find lio_sam)/config/params_velodyne_microstrain.yaml" command="load" />
+
+    <!--- Velodyne driver -->
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+
+    <!--- Robot State TF -->
+    <include file="$(find lio_sam)/launch/include/module_robot_state_publisher_velodyne_microstrain.launch" />
+
+    <!--- IMU Driver -->
+    <include file="$(find microstrain_inertial_driver)/launch/microstrain.launch">
+        <arg name="params_file" value="$(find forklift_controller)/config/microstrain.yaml"/>
+    </include>
+
+    <!--- LOAM -->
+    <include file="$(find lio_sam)/launch/include/module_loam.launch" />
+
+    <!--- Run Rviz-->
+    <include file="$(find lio_sam)/launch/include/module_rviz.launch" />
+
+</launch>

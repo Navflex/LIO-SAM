@@ -1,0 +1,26 @@
+<launch>
+
+    <arg name="project" default="lio_sam"/>
+    
+    <!-- Parameters -->
+    <rosparam file="$(find lio_sam)/config/params_breuna.yaml" command="load" />
+
+    <!--- LOAM -->
+    <include file="$(find lio_sam)/launch/include/module_loam.launch" />
+
+    <!--- Robot State TF -->
+    <include file="$(find lio_sam)/launch/include/module_robot_state_publisher_breuna.launch" />
+
+    <!--- IMU Driver -->
+    <include file="$(find xsens_mti_driver)/launch/xsens_mti_with_orientation_node.launch" />
+
+    <!--- IMU Transformer -->
+    <!--include file="$(find imu_transformer)/launch/ned_to_enu_xsens.launch" /-->
+
+    <!--- Velodyne driver -->
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+
+    <!--- Run Rviz-->
+    <include file="$(find lio_sam)/launch/include/module_rviz.launch" />
+
+</launch>
